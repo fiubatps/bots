@@ -69,10 +69,14 @@ export async function fixTitle(context: Context): Promise<void> {
         console.log(
             `found bad title "${pr.title}", replacing with "${newTitle}"`
         )
-    } else {
+    } else if (!pr.title.includes(" ")) {
         const lab = pr.title.toLocaleLowerCase()
         newTitle = `[${materia}] ${lab} – ${apellido}`
         console.log(`could not parse "${pr.title}", using "${newTitle}"`)
+    } else {
+        console.log(
+            `could not parse multi-word "${pr.title}", refraining from action`
+        )
     }
 
     if (newTitle) {
