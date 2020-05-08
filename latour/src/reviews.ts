@@ -6,6 +6,17 @@ export interface Config {
 
 export async function assignReview(context: Context): Promise<void> {
     const file = "pullreq.yml"
+    const repo = context.payload.repository
+    const pr = context.payload.pull_request
+
+    // Do not act if pull request is draft.
+    if (context.payload.pull_request.draft) {
+        console.log(
+            `assignReview: ignoring draft pull request ${repo.full_name}#${pr.number}`
+        )
+        return
+    }
+
     const config = (await context.config(file)) as Config
 
     if (!config) {
@@ -13,8 +24,6 @@ export async function assignReview(context: Context): Promise<void> {
     }
 
     const { reviewers } = config
-
-    const repo = context.payload.repository
     const key = repo.name
 
     // TODO: learn better Typescript syntax for dicts.
