@@ -8,18 +8,19 @@
     "build": "tsc",
     "build:watch": "tsc && (tsc -w --preserveWatchOutput & nodemon)",
     "dev": "npm run build:watch",
-    "start": "probot run ./lib/index.js",
+    "start": "node -r source-map-support/register node_modules/.bin/probot run ./lib/index.js",
     "lint": "standard **/*.ts --fix",
     "test": "jest && standard **/*.ts",
     "test:watch": "jest --watch --notify --notifyMode=change --coverage"
   },
   "dependencies": {
-    "probot": "^9.11.3"
+    "probot": "^9.11.3",
+    "source-map-support": "^0.5.19"
   },
   "devDependencies": {
     "@types/node": "^13.13.5",
-    "@typescript-eslint/parser": "^2.31.0",
     "@typescript-eslint/eslint-plugin": "^2.31.0",
+    "@typescript-eslint/parser": "^2.31.0",
     "eslint": "^6.0.0",
     "nodemon": "^2.0.3",
     "smee-client": "^1.1.0",
